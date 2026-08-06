@@ -1,0 +1,1253 @@
+/* ===== Tokens ===== */
+:root{
+  --bg: #111111;
+  --bg-darker: #0a0a0a;
+  --ivory: #F5F2EA;
+  --gold: #C4A16A;
+  --stone: #8A847D;
+  --amber: #A9642A;
+  --amber-glow: rgba(169,100,42,.38);
+  --hairline: rgba(196,161,106,.22);
+  --font-display: 'Fraunces', serif;
+  --font-sans: 'Inter', sans-serif;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--ivory);
+  font-family:var(--font-sans);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+section{scroll-margin-top:0;}
+img,video{display:block;max-width:100%;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
+::selection{background:var(--amber);color:var(--ivory);}
+
+/* subtle film-grain overlay for texture, brand feels tactile not flat-digital */
+.grain{
+  position:fixed;inset:0;pointer-events:none;z-index:200;opacity:.035;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+/* ===== Typography ===== */
+.eyebrow{
+  font-family:var(--font-sans);
+  font-size:13px;
+  text-transform:uppercase;
+  letter-spacing:.24em;
+  color:var(--gold);
+  font-weight:500;
+  margin-bottom:22px;
+}
+.h3{
+  font-family:var(--font-display);
+  font-weight:400;
+  font-size:clamp(30px,3.6vw,48px);
+  line-height:1.12;
+  color:var(--ivory);
+  letter-spacing:-.01em;
+  margin-bottom:28px;
+}
+.body{
+  font-size:17px;
+  line-height:1.85;
+  color:var(--stone);
+  max-width:520px;
+  font-weight:400;
+}
+
+/* ===== Buttons ===== */
+.btn{
+  display:inline-block;
+  margin-top:44px;
+  padding:17px 40px;
+  font-size:13px;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  font-weight:500;
+  color:var(--ivory);
+  border:1px solid var(--gold);
+  background:transparent;
+  transition:color .5s ease, border-color .5s ease, box-shadow .5s ease;
+}
+.btn:hover{color:var(--amber);border-color:var(--amber);box-shadow:0 0 30px var(--amber-glow);}
+.btn--sm{margin-top:0;padding:14px 28px;}
+
+/* ===== Nav ===== */
+#nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  padding: 10px 5vw;
+  transition: background .5s ease, padding .5s ease, border-color .5s ease;
+  border-bottom: 1px solid transparent;
+}
+
+#nav.scrolled {
+  background: rgba(17, 17, 17, .92);
+  backdrop-filter: blur(10px);
+  padding: 8px 5vw;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+/* Base equitativa para garantizar el centrado exacto del logo */
+.nav__links {
+  display: flex;
+  gap: 38px;
+  list-style: none;
+  flex: 1 1 0%;
+}
+
+.nav__links--left {
+  justify-content: flex-start;
+}
+
+.nav__links--right {
+  justify-content: flex-end;
+}
+
+.nav__links a {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-weight: 500;
+  color: var(--ivory);
+  position: relative;
+  padding-bottom: 6px;
+  white-space: nowrap;
+}
+
+.nav__links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width .4s cubic-bezier(.4, 0, .2, 1);
+}
+
+.nav__links a:hover::after {
+  width: 100%;
+}
+
+/* Contenedor e imagen del logo */
+.nav__logo {
+  flex-shrink: 0;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav__logo-img {
+  height: 120px; /* Cambia este valor si lo quieres aún más grande (ej: 100px o 110px) */
+  width: auto;
+  object-fit: contain;
+  margin-top: -10px;    /* Sube levemente el logo */
+  margin-bottom: -10px; /* Evita que estire la altura total del #nav */
+  filter: drop-shadow(0px 2px 10px rgba(0, 0, 0, 0.85)) brightness(1.15);
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.nav__logo-img:hover {
+  transform: scale(1.04);
+  filter: drop-shadow(0px 0px 12px rgba(196, 161, 106, 0.5)) brightness(1.2);
+}
+
+.nav__burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 6px;
+}
+
+.nav__burger span {
+  width: 22px;
+  height: 1px;
+  background: var(--ivory);
+  display: block;
+}
+
+.nav__mobile {
+  display: none;
+  list-style: none;
+  flex-direction: column;
+  gap: 0;
+  background: rgba(17, 17, 17, .98);
+}
+
+.nav__mobile.open {
+  display: flex;
+}
+
+.nav__mobile li {
+  border-top: 1px solid var(--hairline);
+}
+
+.nav__mobile a {
+  display: block;
+  padding: 20px 6vw;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+
+@media (max-width: 900px) {
+  .nav__links {
+    display: none;
+  }
+  .nav__logo {
+    padding: 0;
+    margin: 0 auto;
+  }
+  .nav__logo-img {
+    height: 40px;
+  }
+  .nav__burger {
+    display: flex;
+  }
+}
+
+/* ===== Hero ===== */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 640px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(1.1) brightness(0.9);
+  transform: scale(1.02);
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.45);
+}
+
+.hero__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at center,
+    rgba(10, 10, 10, 0.75) 0%,
+    rgba(10, 10, 10, 0.4) 65%,
+    rgba(10, 10, 10, 0.8) 100%
+  );
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  padding: 0 6vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Envoltorio del encabezado con palabra script superpuesta */
+.hero__header-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+/* Texto manuscrito elegante encima del título */
+.hero__script {
+  font-family: 'Alex Brush', cursive;
+  font-size: clamp(72px, 9vw, 120px); /* Aumento dramático de tamaño */
+  color: var(--ivory);
+  opacity: 0.95;
+  line-height: 1;
+  margin-bottom: -15px; /* Mayor solapamiento sobre el título */
+  z-index: 2;
+  position: relative;
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.75);
+}
+
+/* Título principal con fuente display original */
+.hero__title {
+  font-family: var(--font-display);
+  font-weight: 340;
+  font-size: clamp(32px, 4.2vw, 52px); /* Tamaño menor y más estilizado */
+  line-height: 1.1;
+  color: var(--ivory);
+  letter-spacing: 0.12em; /* Espaciado entre letras elegante */
+  text-transform: uppercase; /* Fuerza el estilo en mayúsculas como la foto de referencia */
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.85);
+  position: relative;
+  z-index: 1;
+}
+
+.hero__text {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.hero__text,
+p.hero__text,
+p.body.hero__text {
+  color: var(--gold) !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+}
+
+/* Indicador de scroll */
+.hero__scroll {
+  position: absolute;
+  bottom: 38px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero__scroll-line {
+  width: 1px;
+  height: 44px;
+  background: linear-gradient(var(--gold), transparent);
+  animation: scrollPulse 2.2s ease-in-out infinite;
+}
+
+.hero__scroll-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--stone);
+}
+
+@keyframes scrollPulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ===== Sección Origen Timeline ===== */
+.origen-timeline {
+  position: relative;
+  background: var(--bg-darker);
+  padding: 100px 0;
+  overflow: hidden;
+}
+
+.origen-timeline__header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.timeline-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  min-height: 80vh;
+  margin-bottom: 80px;
+}
+
+.timeline-block:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-block__media {
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  overflow: hidden;
+}
+
+.timeline-block__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.9);
+  transition: transform 1.2s cubic-bezier(.16, 1, .3, 1);
+}
+
+.timeline-block:hover .timeline-block__img {
+  transform: scale(1.03);
+}
+
+.timeline-block__text {
+  padding: 0 8vw;
+  display: flex;
+  align-items: center;
+}
+
+/* ===== Ajustes de Espaciado: El Origen y El Tiempo ===== */
+.origen-timeline#origen {
+  padding-top: 60px;
+  padding-bottom: 20px; /* Reduce el espacio negro inferior de la 1ra sección */
+}
+
+.origen-timeline#tiempo {
+  padding-top: 20px; /* Reduce el espacio negro superior de la 2da sección */
+  padding-bottom: 60px;
+}
+
+.origen-timeline#tiempo .origen-timeline__header {
+  margin-bottom: 30px; /* Acerca el título "EL TIEMPO" a las barricas */
+}
+
+.origen-timeline .timeline-block {
+  margin-bottom: 40px; /* Espaciado interno entre bloques */
+}
+
+.origen-timeline .timeline-block:last-child {
+  margin-bottom: 0;
+}
+
+
+/* ===== Tu código anterior se mantiene intacto debajo ===== */
+
+/* ===== Línea de tiempo estilo Hero (Degradado Dorado) ===== */
+.timeline-border {
+  position: relative;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* Línea a la izquierda */
+.timeline-border--left {
+  padding-left: 35px;
+}
+
+.timeline-border--left::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, var(--gold) 0%, rgba(196, 161, 106, 0.2) 70%, transparent 100%);
+  box-shadow: 0 0 10px rgba(196, 161, 106, 0.3);
+}
+
+/* Línea a la derecha */
+.timeline-border--right {
+  padding-right: 35px;
+  text-align: right;
+}
+
+.timeline-border--right::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, var(--gold) 0%, rgba(196, 161, 106, 0.2) 70%, transparent 100%);
+  box-shadow: 0 0 10px rgba(196, 161, 106, 0.3);
+}
+
+.timeline-border .h3 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.5vw, 44px);
+  color: var(--ivory); /* Título en blanco/marfil */
+  margin-bottom: 18px;
+}
+
+.timeline-border .body {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--gold) !important; /* Párrafos dorados igual al Hero */
+  max-width: 480px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Sombra suave para legibilidad sobre fondo oscuro */
+}
+
+/* Ajuste de alineación para pantallas móviles */
+@media (max-width: 900px) {
+  .timeline-border--right::before {
+    right: auto;
+    left: 0;
+  }
+}
+
+/* ===== Animaciones de entrada lateral por Scroll ===== */
+.reveal--left {
+  opacity: 0 !important;
+  transform: translate3d(-100px, 0, 0) !important;
+  transition: opacity 1.2s cubic-bezier(.16, 1, .3, 1), transform 1.2s cubic-bezier(.16, 1, .3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal--right {
+  opacity: 0 !important;
+  transform: translate3d(100px, 0, 0) !important;
+  transition: opacity 1.2s cubic-bezier(.16, 1, .3, 1), transform 1.2s cubic-bezier(.16, 1, .3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal--left.is-visible,
+.reveal--right.is-visible {
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) !important;
+}
+
+/* Responsivo para móviles */
+@media (max-width: 900px) {
+  .origen-timeline#origen {
+    padding-bottom: 10px;
+  }
+
+  .origen-timeline#tiempo {
+    padding-top: 10px;
+  }
+
+  .timeline-block {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    gap: 40px;
+  }
+
+  .timeline-block--reverse .timeline-block__text {
+    order: 2;
+  }
+
+  .timeline-block--reverse .timeline-block__media {
+    order: 1;
+  }
+
+  .timeline-block__media {
+    min-height: 350px;
+  }
+
+  .timeline-border--left,
+  .timeline-border--right {
+    border-right: none;
+    border-left: 2px solid rgba(255, 255, 255, 0.85);
+    padding-left: 25px;
+    padding-right: 0;
+    text-align: left;
+  }
+}
+
+/* ===== Sección Showcase Destino (Botella Gigante Protagonista) ===== */
+.bottle-showcase {
+  position: relative;
+  padding: 40px 4vw; /* Padding vertical mínimo para aprovechar la altura de pantalla */
+  background: var(--bg-darker);
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Ilustración de fondo dorada en marca de agua */
+.bottle-showcase__bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('assets/img/fondo-tepuy1.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 0.15;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bottle-showcase__header {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 20px;
+}
+
+/* Título Destino en dorado */
+.h3--gold {
+  color: var(--gold) !important;
+  font-size: clamp(36px, 4.5vw, 56px);
+  letter-spacing: 0.02em;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+.bottle-showcase__content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  /* Espacio dominante de 800px para la columna de la botella */
+  grid-template-columns: 1fr 800px 1fr;
+  align-items: center;
+  gap: 20px;
+  max-width: 1650px;
+  margin: 0 auto;
+}
+
+.bottle-showcase__col {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  text-align: left;
+}
+
+.bottle-showcase__col:last-child {
+  text-align: right;
+}
+
+.feature-item .card__label {
+  display: block;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.feature-item .body {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--stone);
+}
+
+.bottle-showcase__center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Tamaño de botella gigante */
+.bottle-showcase__img {
+  width: 100%;
+  max-width: 720px; /* Ancho máximo amplio para gran presencia */
+  height: auto;
+  max-height: 950px; /* Altura monumental */
+  object-fit: contain;
+  filter: drop-shadow(0px 30px 60px rgba(0, 0, 0, 0.95));
+  transition: transform 0.6s cubic-bezier(.16, 1, .3, 1);
+}
+
+.bottle-showcase__img:hover {
+  transform: scale(1.03) translateY(-10px);
+}
+
+/* Responsivo adaptable para laptops y tablets */
+@media (max-width: 1400px) {
+  .bottle-showcase__content {
+    grid-template-columns: 1fr 580px 1fr;
+  }
+
+  .bottle-showcase__img {
+    max-width: 540px;
+    max-height: 780px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .bottle-showcase {
+    padding: 80px 6vw;
+  }
+
+  .bottle-showcase__content {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+
+  .bottle-showcase__center {
+    order: -1;
+  }
+
+  .bottle-showcase__img {
+    max-width: 380px;
+    max-height: 550px;
+  }
+
+  .bottle-showcase__col,
+  .bottle-showcase__col:last-child {
+    text-align: center;
+  }
+}
+
+#monumento .bottle-showcase__bg {
+  background-image: url('assets/img/fondo-tepuy2.png'); /* O el nombre de la imagen de fondo para Monumento */
+  opacity: 0.15;
+}
+
+/* ===== El Ritual Centrado y Compacto ===== */
+.ritual {
+  position: relative;
+  padding: 80px 0 80px; /* Padding vertical ajustado para evitar exceso de scroll */
+  overflow: hidden;
+  text-align: center; /* Centra todo el contenido */
+}
+
+.ritual__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.ritual__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 10, 10, .75), rgba(10, 10, 10, .9));
+  z-index: 0;
+}
+
+.ritual__content {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px; /* Ampliado para permitir el título en 1 sola línea */
+  margin: 0 auto 40px;
+  padding: 0 4vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ritual__content .eyebrow {
+  margin-bottom: 14px;
+}
+
+.ritual__content .h3 {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3.2vw, 42px); /* Tamaño ajustado para encajar continuo */
+  line-height: 1.2;
+  color: var(--ivory);
+  margin-bottom: 18px;
+  white-space: nowrap; /* Garantiza que nunca se rompa en dos líneas */
+  max-width: 100%;
+}
+
+.ritual__content .body {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--gold) !important;
+  max-width: 860px; /* Ancho exacto para distribuir el texto en 2 líneas */
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+  margin: 0 auto;
+}
+
+/* Carrusel */
+.carousel {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  width: 100%;
+}
+
+.carousel::before,
+.carousel::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 8vw;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.carousel::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--bg), transparent);
+}
+
+.carousel::after {
+  right: 0;
+  background: linear-gradient(270deg, var(--bg), transparent);
+}
+
+.carousel__track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  animation: marquee 42s linear infinite;
+  padding: 0 7vw;
+}
+
+.carousel:hover .carousel__track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Tarjeta de Cóctel */
+.cocktail {
+  width: 320px;
+  flex-shrink: 0;
+  background: rgba(245, 242, 234, .03);
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  overflow: hidden;
+  text-align: left; /* Mantiene la información interna del cóctel alineada a la izquierda */
+  transition: transform .5s cubic-bezier(.16, 1, .3, 1), background .5s ease, border-color .5s ease;
+}
+
+.cocktail:hover {
+  transform: translateY(-8px);
+  background: rgba(245, 242, 234, .05);
+  border-color: var(--gold);
+}
+
+.cocktail__media {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.cocktail__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.9) contrast(1.05);
+  transition: transform 0.8s cubic-bezier(.16, 1, .3, 1);
+}
+
+.cocktail:hover .cocktail__img {
+  transform: scale(1.06);
+}
+
+.cocktail__body {
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cocktail__name {
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--ivory);
+  margin-bottom: 8px;
+}
+
+.cocktail__desc {
+  font-size: 13px;
+  color: var(--stone);
+  line-height: 1.65;
+  margin-bottom: 20px;
+  min-height: 42px;
+}
+
+.cocktail__link {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: var(--gold);
+  border-bottom: 1px solid var(--hairline);
+  padding-bottom: 4px;
+  width: fit-content;
+  transition: border-color .3s ease, color .3s ease;
+}
+
+.cocktail:hover .cocktail__link {
+  color: var(--amber);
+  border-color: var(--amber);
+}
+
+/* Botón inferior Ver todas las recetas */
+.ritual__action {
+  text-align: center;
+  margin-top: 40px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Ajustes para móviles */
+@media (max-width: 768px) {
+  .ritual {
+    padding: 60px 0 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ritual__content .h3 {
+    white-space: normal; /* Permite saltos de línea normales en pantallas pequeñas */
+  }
+}
+
+/* ===== El Viaje ===== */
+/* ===== El Viaje ===== */
+.viaje {
+  position: relative;
+  padding: 120px 0 100px; /* Padding superior para despegarlo de la sección anterior */
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.viaje__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.viaje__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 10, 0.85) 0%,
+    rgba(10, 10, 10, 0.60) 40%,
+    rgba(10, 10, 10, 0.85) 100%
+  );
+  z-index: 1;
+}
+
+.viaje__container {
+  position: relative;
+  z-index: 2;
+  width: min(1200px, 90%);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.viaje__header {
+  text-align: center;
+  margin-bottom: 40px;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Tipografía de Título e Eyebrow heredada del diseño base */
+.viaje__header .eyebrow {
+  margin-bottom: 14px;
+}
+
+.viaje__header .h3 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.8vw, 46px);
+  line-height: 1.18;
+  color: var(--ivory);
+  margin-bottom: 16px;
+  white-space: nowrap; /* Título continuo en 1 línea */
+}
+
+/* Párrafo en tono Dorado */
+.viaje__header .body {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--gold) !important;
+  max-width: 780px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+  margin: 0 auto;
+}
+
+/* Envoltorio del mapa centrado */
+.map-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+}
+
+#estadoNombre {
+  color: var(--gold);
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  letter-spacing: 0.05em;
+  min-height: 32px;
+  text-align: center;
+}
+
+.map-svg {
+  width: min(750px, 100%);
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible; /* Permite que si algo sobresale un poco no se corte */
+}
+
+.map-svg svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  /* Desplaza el mapa entero hacia la derecha */
+  transform: translateX(25px); 
+}
+
+.map-svg path {
+  fill: rgba(245, 242, 234, 0.15);
+  stroke: var(--hairline);
+  stroke-width: 1.2;
+  cursor: pointer;
+  transition: fill 0.35s ease, stroke 0.35s ease, filter 0.35s ease;
+}
+
+.map-svg path:hover {
+  fill: var(--gold) !important;
+  stroke: var(--ivory);
+  filter: drop-shadow(0 0 12px var(--amber-glow));
+}
+
+.map-svg path.active {
+  fill: var(--gold);
+  stroke: var(--ivory);
+}
+
+/* Adaptación móvil */
+@media (max-width: 768px) {
+  .viaje {
+    padding: 80px 0 60px;
+  }
+  .viaje__header .h3 {
+    white-space: normal;
+  }
+}
+
+/* ===== Contenedor relativo del mapa ===== */
+.map-wrapper {
+  position: relative;
+}
+
+/* ===== Tooltip Flotante / Leyenda ===== */
+.map-tooltip {
+  position: absolute;
+  display: none;
+  padding: 12px 18px;
+  background: rgba(15, 15, 15, 0.92);
+  border: 1px solid var(--gold);
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 13px;
+  line-height: 1.5;
+  pointer-events: none; /* Permite que el mouse siga interactuando con el SVG */
+  z-index: 20;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  max-width: 260px;
+  text-align: left;
+  transition: opacity 0.15s ease-in-out;
+}
+
+/* Título del Estado dentro del Tooltip */
+.map-tooltip strong {
+  display: block;
+  color: var(--gold);
+  font-family: var(--font-display);
+  font-size: 16px;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+  border-bottom: 1px solid rgba(200, 164, 90, 0.25);
+  padding-bottom: 3px;
+}
+
+/* ===== Footer Unificado y Compacto ===== */
+.footer {
+  background: var(--bg-darker);
+  text-align: center;
+  /* Combinamos paddings: compacto arriba/abajo, y mantenemos el lateral */
+  padding: 40px 7vw 30px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Usamos gap para separación general, pero la ajustaremos individualmente abajo */
+  gap: 20px; 
+}
+
+/* Logo */
+.footer__logo {
+  display: inline-block;
+  /* Eliminamos estilos de texto antiguos porque ahora hay imagen */
+  margin-bottom: 10px; /* Separación específica bajo el logo */
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  line-height: 0; /* Corrección para imágenes dentro de enlaces */
+}
+
+.footer__logo:hover {
+  opacity: 0.9;
+  transform: scale(1.04);
+}
+
+.footer__logo-img {
+  height: 150px; /* Tu valor de logo grande */
+  width: auto;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+/* Navegación principal */
+.footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 32px;
+  list-style: none;
+  margin-bottom: 5px; /* Ajuste fino de separación */
+}
+
+.footer__nav a {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--stone);
+  transition: color .3s ease;
+}
+
+.footer__nav a:hover {
+  color: var(--gold);
+}
+
+/* Redes Sociales */
+.footer__social {
+  color: var(--stone);
+  transition: color .3s ease;
+  display: flex; /* Asegura centrado del SVG */
+  margin-bottom: 5px;
+}
+
+.footer__social:hover {
+  color: var(--gold);
+}
+
+/* Enlaces Legales */
+.footer__legal {
+  display: flex;
+  gap: 26px;
+  list-style: none;
+  margin-bottom: 5px;
+}
+
+.footer__legal a {
+  font-size: 11px;
+  color: var(--stone);
+  transition: color 0.3s ease;
+}
+
+.footer__legal a:hover {
+  color: var(--gold);
+}
+
+/* Copyright */
+.footer__copy {
+  font-size: 11px;
+  color: #5c5854;
+  max-width: 480px;
+  margin-top: 0;
+}
+
+.footer__actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 5px;
+}
+
+.footer__icon {
+  color: var(--stone);
+  transition: color 0.3s ease, transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer__icon:hover {
+  color: var(--gold);
+  transform: translateY(-2px);
+}
+
+/* Destaque sutil para el carrito */
+.footer__icon--cart:hover {
+  color: var(--amber);
+}
+
+/* Ajustes Responsivos */
+@media (max-width: 768px) {
+  .footer {
+    padding: 30px 15px 20px;
+    gap: 15px; /* Menor espacio entre elementos en móvil */
+  }
+  
+  .footer__logo-img {
+    height: 100px; /* Reducimos un poco el logo en móviles muy pequeños */
+  }
+  
+  .footer__nav {
+    gap: 15px 20px; /* gap para filas y columnas envoltura */
+  }
+}
+
+/* ===== Reduced motion ===== */
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;}
+  html{scroll-behavior:auto;}
+}
+
+/* ===== Focus visibility ===== */
+a:focus-visible,button:focus-visible,input:focus-visible{outline:1px solid var(--gold);outline-offset:3px;}
+
+
+/* ===== Reveal on scroll ===== */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 1s cubic-bezier(.4,0,.2,1), transform 1s cubic-bezier(.4,0,.2,1);}
+.reveal.is-visible{opacity:1;transform:translateY(0);}
+.hero__content.reveal{transition-delay:.2s;}
+
+/* ===== Split sections ===== */
+.split{
+  display:grid;grid-template-columns:1fr 1fr;align-items:center;
+  gap:clamp(40px,7vw,120px);
+  padding:min(160px,14vw) 7vw;
+  background:var(--bg);
+}
+.split--dark{background:var(--bg-darker);}
+.split__text{max-width:520px;}
+.media-frame{overflow:hidden;aspect-ratio:4/5;}
+.media-frame__img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s cubic-bezier(.16,1,.3,1);filter:brightness(.92);}
+.media-frame:hover .media-frame__img{transform:scale(1.045);}
+
+@media (max-width:900px){
+  .split{grid-template-columns:1fr;padding:100px 7vw;}
+  .split--reverse .split__media{order:-1;}
+}
