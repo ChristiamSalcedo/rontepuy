@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-  // 1. Estado de la barra de navegación al hacer scroll
+  // ===== 1. Estado de la barra de navegación al hacer scroll =====
   const nav = document.getElementById('nav');
   if (nav) {
     const updateNav = () => {
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', updateNav, { passive: true });
   }
 
-  // 2. Menú móvil
+  // ===== 2. Menú móvil =====
   const burger = document.getElementById('burgerBtn');
   const mobileMenu = document.getElementById('navMobile');
   if (burger && mobileMenu) {
@@ -31,26 +31,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 3. Animaciones al hacer scroll (soporta entradas centrales y laterales)
+  // ===== 3. Animaciones al hacer scroll =====
   const revealEls = document.querySelectorAll('.reveal, .reveal--left, .reveal--right');
-
-if (revealEls.length > 0) {
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        io.unobserve(entry.target); // Ejecuta la animación una sola vez
-      }
+  if (revealEls.length > 0) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { 
+      threshold: 0.15,
+      rootMargin: '0px 0px -100px 0px'
     });
-  }, { 
-    threshold: 0.15,
-    rootMargin: '0px 0px -100px 0px' // Obliga a hacer scroll más abajo para activar la animación
-  });
 
-  revealEls.forEach(el => io.observe(el));
-}
+    revealEls.forEach(el => io.observe(el));
+  }
 
-  // 4. Carrusel de cócteles
+  // ===== 4. Carrusel de cócteles =====
   const track = document.getElementById('carouselTrack');
   if (track) {
     const cocktails = [
@@ -102,32 +101,36 @@ if (revealEls.length > 0) {
       return card;
     };
 
-    // Duplicado de elementos para permitir desplazamiento infinito continuo
     const list = [...cocktails, ...cocktails];
     list.forEach(c => track.appendChild(buildCard(c)));
   }
 
-});
-
-document.addEventListener("DOMContentLoaded", () => {
+  // ===== 5. Mapa Interactivo =====
   const estados = document.querySelectorAll(".map-svg path");
   const tituloEstado = document.getElementById("estadoNombre");
   const tooltip = document.getElementById("mapTooltip");
   const mapWrapper = document.querySelector(".map-wrapper");
+  let autoDeselectTimer = null;
+
+  // Limpia todos los estados activos y oculta el tooltip
+  const resetMapStates = () => {
+    estados.forEach(e => e.classList.remove("active"));
+    if (tooltip) tooltip.style.display = "none";
+    if (tituloEstado) tituloEstado.textContent = "Explora Venezuela";
+  };
 
   if (estados.length > 0) {
     estados.forEach((estado) => {
-      // 1. Evento para mover el mouse dentro del estado
+      
+      // Movimiento del cursor sobre el estado
       estado.addEventListener("mousemove", (e) => {
         const nombre = estado.getAttribute("title") || estado.getAttribute("id");
         const info = estado.getAttribute("data-info");
 
-        // Cambia el título fijo arriba del mapa
         if (tituloEstado) {
           tituloEstado.textContent = nombre;
         }
 
-        // Si tiene data-info, posiciona y muestra la leyenda flotante
         if (info && tooltip && mapWrapper) {
           tooltip.innerHTML = `<strong>${nombre}</strong>${info}`;
           tooltip.style.display = "block";
@@ -143,8 +146,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
 
-      // 2. Evento cuando el mouse sale del estado
+      // Cursor sale del estado
       estado.addEventListener("mouseleave", () => {
+        estado.classList.remove("active");
         if (tituloEstado) {
           tituloEstado.textContent = "Explora Venezuela";
         }
@@ -153,11 +157,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
 
-      // 3. Evento al hacer clic en un estado
+      // Clic en un estado (Selección con temporizador de 2 segundos)
       estado.addEventListener("click", () => {
-        estados.forEach((e) => e.classList.remove("active"));
+        if (autoDeselectTimer) clearTimeout(autoDeselectTimer);
+
+        // Apaga los demás antes de encender el actual
+        estados.forEach(e => e.classList.remove("active"));
         estado.classList.add("active");
+
+        // Temporizador para desmarcar a los 2 segundos
+        autoDeselectTimer = setTimeout(() => {
+          resetMapStates();
+        }, 2000);
       });
     });
   }
+
 });

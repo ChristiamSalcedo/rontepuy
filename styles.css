@@ -27,7 +27,6 @@ a{color:inherit;text-decoration:none;}
 button{font-family:inherit;cursor:pointer;}
 ::selection{background:var(--amber);color:var(--ivory);}
 
-/* subtle film-grain overlay for texture, brand feels tactile not flat-digital */
 .grain{
   position:fixed;inset:0;pointer-events:none;z-index:200;opacity:.035;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
@@ -103,7 +102,6 @@ button{font-family:inherit;cursor:pointer;}
   position: relative;
 }
 
-/* Base equitativa para garantizar el centrado exacto del logo */
 .nav__links {
   display: flex;
   gap: 38px;
@@ -145,7 +143,6 @@ button{font-family:inherit;cursor:pointer;}
   width: 100%;
 }
 
-/* Contenedor e imagen del logo */
 .nav__logo {
   flex-shrink: 0;
   padding: 0 30px;
@@ -155,11 +152,11 @@ button{font-family:inherit;cursor:pointer;}
 }
 
 .nav__logo-img {
-  height: 120px; /* Cambia este valor si lo quieres aún más grande (ej: 100px o 110px) */
+  height: 120px; 
   width: auto;
   object-fit: contain;
-  margin-top: -10px;    /* Sube levemente el logo */
-  margin-bottom: -10px; /* Evita que estire la altura total del #nav */
+  margin-top: -10px;    
+  margin-bottom: -10px; 
   filter: drop-shadow(0px 2px 10px rgba(0, 0, 0, 0.85)) brightness(1.15);
   transition: transform 0.3s ease, filter 0.3s ease;
 }
@@ -278,7 +275,6 @@ button{font-family:inherit;cursor:pointer;}
   align-items: center;
 }
 
-/* Envoltorio del encabezado con palabra script superpuesta */
 .hero__header-wrapper {
   position: relative;
   display: flex;
@@ -287,28 +283,26 @@ button{font-family:inherit;cursor:pointer;}
   margin-bottom: 24px;
 }
 
-/* Texto manuscrito elegante encima del título */
 .hero__script {
   font-family: 'Alex Brush', cursive;
-  font-size: clamp(72px, 9vw, 120px); /* Aumento dramático de tamaño */
+  font-size: clamp(72px, 9vw, 120px); 
   color: var(--ivory);
   opacity: 0.95;
   line-height: 1;
-  margin-bottom: -15px; /* Mayor solapamiento sobre el título */
+  margin-bottom: -15px;
   z-index: 2;
   position: relative;
   text-shadow: 0 4px 18px rgba(0, 0, 0, 0.75);
 }
 
-/* Título principal con fuente display original */
 .hero__title {
   font-family: var(--font-display);
   font-weight: 340;
-  font-size: clamp(32px, 4.2vw, 52px); /* Tamaño menor y más estilizado */
+  font-size: clamp(32px, 4.2vw, 52px);
   line-height: 1.1;
   color: var(--ivory);
-  letter-spacing: 0.12em; /* Espaciado entre letras elegante */
-  text-transform: uppercase; /* Fuerza el estilo en mayúsculas como la foto de referencia */
+  letter-spacing: 0.12em; 
+  text-transform: uppercase;
   text-shadow: 0 4px 20px rgba(0, 0, 0, 0.85);
   position: relative;
   z-index: 1;
@@ -326,7 +320,6 @@ p.body.hero__text {
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
 }
 
-/* Indicador de scroll */
 .hero__scroll {
   position: absolute;
   bottom: 38px;
@@ -362,7 +355,7 @@ p.body.hero__text {
   }
 }
 
-/* ===== Sección Origen Timeline ===== */
+/* ===== Sección Origen  ===== */
 .origen-timeline {
   position: relative;
   background: var(--bg-darker);
@@ -380,7 +373,7 @@ p.body.hero__text {
   grid-template-columns: 1fr 1fr;
   align-items: center;
   min-height: 80vh;
-  margin-bottom: 80px;
+  margin-bottom: 40px; 
 }
 
 .timeline-block:last-child {
@@ -413,48 +406,30 @@ p.body.hero__text {
   align-items: center;
 }
 
-/* ===== Ajustes de Espaciado: El Origen y El Tiempo ===== */
 .origen-timeline#origen {
   padding-top: 60px;
-  padding-bottom: 20px; /* Reduce el espacio negro inferior de la 1ra sección */
+  padding-bottom: 20px; 
 }
 
 .origen-timeline#tiempo {
-  padding-top: 20px; /* Reduce el espacio negro superior de la 2da sección */
+  padding-top: 20px; 
   padding-bottom: 60px;
 }
 
 .origen-timeline#tiempo .origen-timeline__header {
-  margin-bottom: 30px; /* Acerca el título "EL TIEMPO" a las barricas */
+  margin-bottom: 30px; 
 }
 
-.origen-timeline .timeline-block {
-  margin-bottom: 40px; /* Espaciado interno entre bloques */
-}
-
-.origen-timeline .timeline-block:last-child {
-  margin-bottom: 0;
-}
-
-
-/* ===== Tu código anterior se mantiene intacto debajo ===== */
-
-/* ===== Línea de tiempo estilo Hero (Degradado Dorado) ===== */
 .timeline-border {
   position: relative;
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
-/* Línea a la izquierda */
-.timeline-border--left {
-  padding-left: 35px;
-}
-
-.timeline-border--left::before {
+.timeline-border--left::before,
+.timeline-border--right::before {
   content: '';
   position: absolute;
-  left: 0;
   top: 0;
   bottom: 0;
   width: 1px;
@@ -462,39 +437,36 @@ p.body.hero__text {
   box-shadow: 0 0 10px rgba(196, 161, 106, 0.3);
 }
 
-/* Línea a la derecha */
+.timeline-border--left {
+  padding-left: 35px;
+}
+.timeline-border--left::before {
+  left: 0;
+}
+
 .timeline-border--right {
   padding-right: 35px;
   text-align: right;
 }
-
 .timeline-border--right::before {
-  content: '';
-  position: absolute;
   right: 0;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: linear-gradient(180deg, var(--gold) 0%, rgba(196, 161, 106, 0.2) 70%, transparent 100%);
-  box-shadow: 0 0 10px rgba(196, 161, 106, 0.3);
 }
 
 .timeline-border .h3 {
   font-family: var(--font-display);
   font-size: clamp(28px, 3.5vw, 44px);
-  color: var(--ivory); /* Título en blanco/marfil */
+  color: var(--ivory); 
   margin-bottom: 18px;
 }
 
 .timeline-border .body {
   font-size: 15px;
   line-height: 1.75;
-  color: var(--gold) !important; /* Párrafos dorados igual al Hero */
+  color: var(--gold) !important; 
   max-width: 480px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Sombra suave para legibilidad sobre fondo oscuro */
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); 
 }
 
-/* Ajuste de alineación para pantallas móviles */
 @media (max-width: 900px) {
   .timeline-border--right::before {
     right: auto;
@@ -502,7 +474,6 @@ p.body.hero__text {
   }
 }
 
-/* ===== Animaciones de entrada lateral por Scroll ===== */
 .reveal--left {
   opacity: 0 !important;
   transform: translate3d(-100px, 0, 0) !important;
@@ -561,16 +532,15 @@ p.body.hero__text {
   }
 }
 
-/* ===== Sección Showcase Destino (Botella Gigante Protagonista) ===== */
+/* ===== Destino ===== */
 .bottle-showcase {
   position: relative;
-  padding: 40px 4vw; /* Padding vertical mínimo para aprovechar la altura de pantalla */
+  padding: 40px 4vw; 
   background: var(--bg-darker);
   text-align: center;
   overflow: hidden;
 }
 
-/* Ilustración de fondo dorada en marca de agua */
 .bottle-showcase__bg {
   position: absolute;
   inset: 0;
@@ -590,7 +560,6 @@ p.body.hero__text {
   margin-bottom: 20px;
 }
 
-/* Título Destino en dorado */
 .h3--gold {
   color: var(--gold) !important;
   font-size: clamp(36px, 4.5vw, 56px);
@@ -602,7 +571,6 @@ p.body.hero__text {
   position: relative;
   z-index: 1;
   display: grid;
-  /* Espacio dominante de 800px para la columna de la botella */
   grid-template-columns: 1fr 800px 1fr;
   align-items: center;
   gap: 20px;
@@ -642,12 +610,11 @@ p.body.hero__text {
   align-items: center;
 }
 
-/* Tamaño de botella gigante */
 .bottle-showcase__img {
   width: 100%;
-  max-width: 720px; /* Ancho máximo amplio para gran presencia */
+  max-width: 720px; 
   height: auto;
-  max-height: 950px; /* Altura monumental */
+  max-height: 950px; 
   object-fit: contain;
   filter: drop-shadow(0px 30px 60px rgba(0, 0, 0, 0.95));
   transition: transform 0.6s cubic-bezier(.16, 1, .3, 1);
@@ -657,7 +624,6 @@ p.body.hero__text {
   transform: scale(1.03) translateY(-10px);
 }
 
-/* Responsivo adaptable para laptops y tablets */
 @media (max-width: 1400px) {
   .bottle-showcase__content {
     grid-template-columns: 1fr 580px 1fr;
@@ -695,16 +661,16 @@ p.body.hero__text {
 }
 
 #monumento .bottle-showcase__bg {
-  background-image: url('assets/img/fondo-tepuy2.png'); /* O el nombre de la imagen de fondo para Monumento */
+  background-image: url('assets/img/fondo-tepuy2.png'); 
   opacity: 0.15;
 }
 
-/* ===== El Ritual Centrado y Compacto ===== */
+/* ===== El Ritual ===== */
 .ritual {
   position: relative;
-  padding: 80px 0 80px; /* Padding vertical ajustado para evitar exceso de scroll */
+  padding: 80px 0 80px; 
   overflow: hidden;
-  text-align: center; /* Centra todo el contenido */
+  text-align: center; 
 }
 
 .ritual__video {
@@ -726,7 +692,7 @@ p.body.hero__text {
 .ritual__content {
   position: relative;
   z-index: 1;
-  max-width: 1100px; /* Ampliado para permitir el título en 1 sola línea */
+  max-width: 1100px; 
   margin: 0 auto 40px;
   padding: 0 4vw;
   display: flex;
@@ -740,11 +706,11 @@ p.body.hero__text {
 
 .ritual__content .h3 {
   font-family: var(--font-display);
-  font-size: clamp(26px, 3.2vw, 42px); /* Tamaño ajustado para encajar continuo */
+  font-size: clamp(26px, 3.2vw, 42px);
   line-height: 1.2;
   color: var(--ivory);
   margin-bottom: 18px;
-  white-space: nowrap; /* Garantiza que nunca se rompa en dos líneas */
+  white-space: nowrap; 
   max-width: 100%;
 }
 
@@ -752,12 +718,11 @@ p.body.hero__text {
   font-size: 15px;
   line-height: 1.65;
   color: var(--gold) !important;
-  max-width: 860px; /* Ancho exacto para distribuir el texto en 2 líneas */
+  max-width: 860px; 
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
   margin: 0 auto;
 }
 
-/* Carrusel */
 .carousel {
   position: relative;
   z-index: 1;
@@ -807,7 +772,6 @@ p.body.hero__text {
   }
 }
 
-/* Tarjeta de Cóctel */
 .cocktail {
   width: 320px;
   flex-shrink: 0;
@@ -815,7 +779,7 @@ p.body.hero__text {
   border: 1px solid var(--hairline);
   border-radius: 6px;
   overflow: hidden;
-  text-align: left; /* Mantiene la información interna del cóctel alineada a la izquierda */
+  text-align: left;
   transition: transform .5s cubic-bezier(.16, 1, .3, 1), background .5s ease, border-color .5s ease;
 }
 
@@ -881,7 +845,6 @@ p.body.hero__text {
   border-color: var(--amber);
 }
 
-/* Botón inferior Ver todas las recetas */
 .ritual__action {
   text-align: center;
   margin-top: 40px;
@@ -889,7 +852,6 @@ p.body.hero__text {
   z-index: 2;
 }
 
-/* Ajustes para móviles */
 @media (max-width: 768px) {
   .ritual {
     padding: 60px 0 60px;
@@ -898,15 +860,14 @@ p.body.hero__text {
 
 @media (max-width: 768px) {
   .ritual__content .h3 {
-    white-space: normal; /* Permite saltos de línea normales en pantallas pequeñas */
+    white-space: normal; 
   }
 }
 
 /* ===== El Viaje ===== */
-/* ===== El Viaje ===== */
 .viaje {
   position: relative;
-  padding: 120px 0 100px; /* Padding superior para despegarlo de la sección anterior */
+  padding: 120px 0 100px; 
   min-height: 100vh;
   overflow: hidden;
   display: flex;
@@ -954,7 +915,6 @@ p.body.hero__text {
   align-items: center;
 }
 
-/* Tipografía de Título e Eyebrow heredada del diseño base */
 .viaje__header .eyebrow {
   margin-bottom: 14px;
 }
@@ -965,10 +925,9 @@ p.body.hero__text {
   line-height: 1.18;
   color: var(--ivory);
   margin-bottom: 16px;
-  white-space: nowrap; /* Título continuo en 1 línea */
+  white-space: nowrap; 
 }
 
-/* Párrafo en tono Dorado */
 .viaje__header .body {
   font-size: 15px;
   line-height: 1.65;
@@ -978,7 +937,6 @@ p.body.hero__text {
   margin: 0 auto;
 }
 
-/* Envoltorio del mapa centrado */
 .map-wrapper {
   display: flex;
   flex-direction: column;
@@ -1005,23 +963,22 @@ p.body.hero__text {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: visible; /* Permite que si algo sobresale un poco no se corte */
+  overflow: visible; 
 }
 
 .map-svg svg {
   width: 100%;
   height: auto;
   display: block;
-  /* Desplaza el mapa entero hacia la derecha */
   transform: translateX(25px); 
 }
 
 .map-svg path {
-  fill: rgba(245, 242, 234, 0.15);
-  stroke: var(--hairline);
-  stroke-width: 1.2;
+  fill: rgba(255, 255, 255, 0.08);
+  stroke: var(--gold);
+  stroke-width: 1;
+  transition: fill 0.3s ease, transform 0.3s ease;
   cursor: pointer;
-  transition: fill 0.35s ease, stroke 0.35s ease, filter 0.35s ease;
 }
 
 .map-svg path:hover {
@@ -1031,11 +988,10 @@ p.body.hero__text {
 }
 
 .map-svg path.active {
-  fill: var(--gold);
-  stroke: var(--ivory);
+  fill: var(--gold) !important; 
+  opacity: 0.9;
 }
 
-/* Adaptación móvil */
 @media (max-width: 768px) {
   .viaje {
     padding: 80px 0 60px;
@@ -1045,12 +1001,10 @@ p.body.hero__text {
   }
 }
 
-/* ===== Contenedor relativo del mapa ===== */
 .map-wrapper {
   position: relative;
 }
 
-/* ===== Tooltip Flotante / Leyenda ===== */
 .map-tooltip {
   position: absolute;
   display: none;
@@ -1061,7 +1015,7 @@ p.body.hero__text {
   color: #ffffff;
   font-size: 13px;
   line-height: 1.5;
-  pointer-events: none; /* Permite que el mouse siga interactuando con el SVG */
+  pointer-events: none;
   z-index: 20;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(8px);
@@ -1070,7 +1024,6 @@ p.body.hero__text {
   transition: opacity 0.15s ease-in-out;
 }
 
-/* Título del Estado dentro del Tooltip */
 .map-tooltip strong {
   display: block;
   color: var(--gold);
@@ -1082,27 +1035,24 @@ p.body.hero__text {
   padding-bottom: 3px;
 }
 
-/* ===== Footer Unificado y Compacto ===== */
+/* ===== Footer ===== */
 .footer {
   background: var(--bg-darker);
   text-align: center;
-  /* Combinamos paddings: compacto arriba/abajo, y mantenemos el lateral */
   padding: 40px 7vw 30px; 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* Usamos gap para separación general, pero la ajustaremos individualmente abajo */
   gap: 20px; 
 }
 
 /* Logo */
 .footer__logo {
   display: inline-block;
-  /* Eliminamos estilos de texto antiguos porque ahora hay imagen */
-  margin-bottom: 10px; /* Separación específica bajo el logo */
+  margin-bottom: 10px; 
   transition: transform 0.3s ease, opacity 0.3s ease;
-  line-height: 0; /* Corrección para imágenes dentro de enlaces */
+  line-height: 0; 
 }
 
 .footer__logo:hover {
@@ -1111,21 +1061,20 @@ p.body.hero__text {
 }
 
 .footer__logo-img {
-  height: 150px; /* Tu valor de logo grande */
+  height: 150px; 
   width: auto;
   display: block;
   margin: 0 auto;
   object-fit: contain;
 }
 
-/* Navegación principal */
 .footer__nav {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 32px;
   list-style: none;
-  margin-bottom: 5px; /* Ajuste fino de separación */
+  margin-bottom: 5px; 
 }
 
 .footer__nav a {
@@ -1140,11 +1089,10 @@ p.body.hero__text {
   color: var(--gold);
 }
 
-/* Redes Sociales */
 .footer__social {
   color: var(--stone);
   transition: color .3s ease;
-  display: flex; /* Asegura centrado del SVG */
+  display: flex; 
   margin-bottom: 5px;
 }
 
@@ -1152,7 +1100,6 @@ p.body.hero__text {
   color: var(--gold);
 }
 
-/* Enlaces Legales */
 .footer__legal {
   display: flex;
   gap: 26px;
@@ -1170,7 +1117,6 @@ p.body.hero__text {
   color: var(--gold);
 }
 
-/* Copyright */
 .footer__copy {
   font-size: 11px;
   color: #5c5854;
@@ -1198,24 +1144,22 @@ p.body.hero__text {
   transform: translateY(-2px);
 }
 
-/* Destaque sutil para el carrito */
 .footer__icon--cart:hover {
   color: var(--amber);
 }
 
-/* Ajustes Responsivos */
 @media (max-width: 768px) {
   .footer {
     padding: 30px 15px 20px;
-    gap: 15px; /* Menor espacio entre elementos en móvil */
+    gap: 15px; 
   }
   
   .footer__logo-img {
-    height: 100px; /* Reducimos un poco el logo en móviles muy pequeños */
+    height: 100px; 
   }
   
   .footer__nav {
-    gap: 15px 20px; /* gap para filas y columnas envoltura */
+    gap: 15px 20px; 
   }
 }
 
