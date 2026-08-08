@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ===== 1. Estado de la barra de navegación al hacer scroll =====
+  // =====  Estado de la barra de navegación al hacer scroll =====
   const nav = document.getElementById('nav');
   if (nav) {
     const updateNav = () => {
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', updateNav, { passive: true });
   }
 
-  // ===== 2. Menú móvil =====
+  // =====  Menú móvil =====
   const burger = document.getElementById('burgerBtn');
   const mobileMenu = document.getElementById('navMobile');
   if (burger && mobileMenu) {
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ===== 3. Animaciones al hacer scroll =====
+  // ===== Animaciones al hacer scroll =====
   const revealEls = document.querySelectorAll('.reveal, .reveal--left, .reveal--right');
   if (revealEls.length > 0) {
     const io = new IntersectionObserver((entries) => {
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     revealEls.forEach(el => io.observe(el));
   }
 
-  // ===== 4. Carrusel de cócteles =====
+  // =====  Carrusel de cócteles =====
   const track = document.getElementById('carouselTrack');
   if (track) {
     const cocktails = [
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
       {
         slug: 'daiquiri',
         name: 'Daiquiri',
-        desc: 'Ron Tepuy Monumento, limón fresco y azúcar.',
+        desc: 'Ron Tepuy Destino, limón fresco y azúcar.',
         image: 'assets/cocteles/daiquiri.jpeg'
       }
     ];
@@ -105,14 +105,13 @@ document.addEventListener('DOMContentLoaded', () => {
     list.forEach(c => track.appendChild(buildCard(c)));
   }
 
-  // ===== 5. Mapa Interactivo =====
+  // =====  Mapa Interactivo =====
   const estados = document.querySelectorAll(".map-svg path");
   const tituloEstado = document.getElementById("estadoNombre");
   const tooltip = document.getElementById("mapTooltip");
   const mapWrapper = document.querySelector(".map-wrapper");
   let autoDeselectTimer = null;
 
-  // Limpia todos los estados activos y oculta el tooltip
   const resetMapStates = () => {
     estados.forEach(e => e.classList.remove("active"));
     if (tooltip) tooltip.style.display = "none";
@@ -122,7 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (estados.length > 0) {
     estados.forEach((estado) => {
       
-      // Movimiento del cursor sobre el estado
       estado.addEventListener("mousemove", (e) => {
         const nombre = estado.getAttribute("title") || estado.getAttribute("id");
         const info = estado.getAttribute("data-info");
@@ -146,7 +144,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-      // Cursor sale del estado
       estado.addEventListener("mouseleave", () => {
         estado.classList.remove("active");
         if (tituloEstado) {
@@ -157,15 +154,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-      // Clic en un estado (Selección con temporizador de 2 segundos)
       estado.addEventListener("click", () => {
         if (autoDeselectTimer) clearTimeout(autoDeselectTimer);
 
-        // Apaga los demás antes de encender el actual
         estados.forEach(e => e.classList.remove("active"));
         estado.classList.add("active");
 
-        // Temporizador para desmarcar a los 2 segundos
         autoDeselectTimer = setTimeout(() => {
           resetMapStates();
         }, 2000);
